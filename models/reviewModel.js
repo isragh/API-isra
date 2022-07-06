@@ -1,4 +1,3 @@
-// review / rating / createdAt / ref to tour / ref to user
 const mongoose = require('mongoose');
 const Tour = require('./tourModel');
 
@@ -73,14 +72,12 @@ reviewSchema.statics.calcAverageRatings = async function(tourId) {
 };
 
 reviewSchema.post('save', function() {
-  // this points to current review
   this.constructor.calcAverageRatings(this.tour);
 });
 
-// findByIdAndUpdate
-// findByIdAndDelete
 reviewSchema.pre(/^findOneAnd/, async function(next) {
   this.r = await this.findOne();
+  // console.log(this.r);
   next();
 });
 
